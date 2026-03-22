@@ -53,7 +53,7 @@
 
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "./dist",
     "module": "nodenext",
     "target": "esnext",
@@ -74,5 +74,5 @@
     "esModuleInterop": true // এটি অ্যাড করা ভালো
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*"]
+  "include": ["src/**/*","api/**/*"]
 }
