@@ -6,7 +6,7 @@ const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
 };
 
-// Connection Pool তৈরি
+// Connection Pool 
 const pool = new pg.Pool({ 
     connectionString: process.env.DATABASE_URL 
 });
