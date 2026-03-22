@@ -13,7 +13,7 @@ const app = express()
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://auth-full-frontend.vercel.app/",  // 
+    "https://auth-full-frontend.vercel.app",
   ],
   credentials: true,
 }));
