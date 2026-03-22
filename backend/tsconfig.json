@@ -55,7 +55,7 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./dist",
-    "module": "nodenext",
+    "module": "commonjs",
     "target": "esnext",
     "lib": ["esnext"],
     "types": ["node"],
@@ -66,12 +66,12 @@
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": false, // এটি false করলে Prisma/PG এরর কম দেবে
+    "exactOptionalPropertyTypes": false, 
 
     "isolatedModules": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "esModuleInterop": true // এটি অ্যাড করা ভালো
+    "esModuleInterop": true 
   },
   "exclude": ["node_modules", "dist"],
   "include": ["src/**/*","api/**/*"]
