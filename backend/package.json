@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
-  
   "scripts": {
-        "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-        "build": "prisma generate && tsc",
-        "start": "node dist/server.js",
-        "postinstall": "prisma generate"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "prisma generate && tsc",
+    "start": "node dist/server.js",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",

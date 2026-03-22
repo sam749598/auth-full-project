@@ -39,8 +39,10 @@
     "outDir": "./dist",
     "module": "commonjs",
     "target": "esnext",
-    "lib": ["esnext"],
+    "lib": ["esnext","dom"],
     "types": ["node"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     
     /* Strictness */
     "strict": true,
@@ -59,5 +61,10 @@
     "esModuleInterop": true 
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*", "api/**/*", "src/generated/**/*"]
+  "include": [
+    "src/**/*", 
+    "api/**/*", 
+    "src/generated/**/*",
+    "prisma/**/*.ts"  
+  ]
 }

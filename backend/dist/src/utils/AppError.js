@@ -1,4 +1,7 @@
-export class AppError extends Error {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AppError = void 0;
+class AppError extends Error {
     statusCode;
     isOperational;
     constructor(message, statusCode) {
@@ -8,4 +11,5 @@ export class AppError extends Error {
         Error.captureStackTrace(this, this.constructor);
     }
 }
+exports.AppError = AppError;
 //# sourceMappingURL=AppError.js.map

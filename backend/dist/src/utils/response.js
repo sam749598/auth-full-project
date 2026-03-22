@@ -1,4 +1,7 @@
-export const sendsuccess = (res, message, data, statusCode = 200) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendError = exports.sendsuccess = void 0;
+const sendsuccess = (res, message, data, statusCode = 200) => {
     const response = {
         success: true,
         message,
@@ -6,7 +9,8 @@ export const sendsuccess = (res, message, data, statusCode = 200) => {
     };
     return res.status(statusCode).json(response);
 };
-export const sendError = (res, message, statusCode = 400, error) => {
+exports.sendsuccess = sendsuccess;
+const sendError = (res, message, statusCode = 400, error) => {
     const response = {
         success: false,
         message,
@@ -14,4 +18,5 @@ export const sendError = (res, message, statusCode = 400, error) => {
     };
     return res.status(statusCode).json(response);
 };
+exports.sendError = sendError;
 //# sourceMappingURL=response.js.map

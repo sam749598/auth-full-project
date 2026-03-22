@@ -1,23 +1,29 @@
-import { env } from "../config/env.js";
-import jwt from "jsonwebtoken";
-import { prisma } from "../config/prisma.js";
-import bcrypt from "bcryptjs";
-import { AppError } from "../utils/AppError.js";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteProfile = exports.updateProfile = exports.getAllUsers = exports.getProfile = exports.login = exports.register = void 0;
+const env_js_1 = require("../config/env.js");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const prisma_js_1 = require("../config/prisma.js");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const AppError_js_1 = require("../utils/AppError.js");
 const generateToken = (payload) => {
-    return jwt.sign(payload, env.JWT_SECRET, {
-        expiresIn: env.JWT_EXPIRES_IN,
+    return jsonwebtoken_1.default.sign(payload, env_js_1.env.JWT_SECRET, {
+        expiresIn: env_js_1.env.JWT_EXPIRES_IN,
     });
 };
 //register
-export const register = async (input) => {
+const register = async (input) => {
     const { name, email, password, role } = input;
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const existingUser = await prisma_js_1.prisma.user.findUnique({ where: { email } });
     if (existingUser) {
         throw new Error("User already exists");
     }
     ;
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await prisma.user.create({
+    const hashedPassword = await bcryptjs_1.default.hash(password, 12);
+    const user = await prisma_js_1.prisma.user.create({
         data: { email, password: hashedPassword, name, role: role || "USER" },
         select: {
             id: true,
@@ -34,17 +40,18 @@ export const register = async (input) => {
     });
     return { user, token };
 };
+exports.register = register;
 // ─── Login ─── //
-export const login = async (input) => {
+const login = async (input) => {
     const { email, password } = input;
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma_js_1.prisma.user.findUnique({ where: { email } });
     if (!user) {
-        throw new AppError("Invalid email or password", 401);
+        throw new AppError_js_1.AppError("Invalid email or password", 401);
     }
     ;
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcryptjs_1.default.compare(password, user.password);
     if (!isPasswordValid) {
-        throw new AppError("Invalid email or password", 401);
+        throw new AppError_js_1.AppError("Invalid email or password", 401);
     }
     ;
     const token = generateToken({
@@ -55,9 +62,10 @@ export const login = async (input) => {
     const { password: _, ...userWithoutPassword } = user;
     return { user: userWithoutPassword, token };
 };
+exports.login = login;
 // ─── Get Profile(self/user) ──── //
-export const getProfile = async (userId) => {
-    const user = await prisma.user.findUnique({
+const getProfile = async (userId) => {
+    const user = await prisma_js_1.prisma.user.findUnique({
         where: { id: userId },
         select: {
             id: true,
@@ -68,14 +76,15 @@ export const getProfile = async (userId) => {
         }
     });
     if (!user) {
-        throw new AppError("User not found", 404);
+        throw new AppError_js_1.AppError("User not found", 404);
     }
     ;
     return user;
 };
+exports.getProfile = getProfile;
 // ─── Get All Users(admin only) ─────//
-export const getAllUsers = async () => {
-    const users = await prisma.user.findMany({
+const getAllUsers = async () => {
+    const users = await prisma_js_1.prisma.user.findMany({
         select: {
             id: true,
             email: true,
@@ -86,14 +95,15 @@ export const getAllUsers = async () => {
     });
     return users;
 };
+exports.getAllUsers = getAllUsers;
 // ─── Update Profile(self/user) ────//
-export const updateProfile = async (userId, input) => {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+const updateProfile = async (userId, input) => {
+    const user = await prisma_js_1.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-        throw new AppError("User not found", 404);
+        throw new AppError_js_1.AppError("User not found", 404);
     }
     ;
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await prisma_js_1.prisma.user.update({
         where: { id: userId },
         data: { ...input },
         select: {
@@ -106,13 +116,15 @@ export const updateProfile = async (userId, input) => {
     });
     return updatedUser;
 };
+exports.updateProfile = updateProfile;
 // ─── Delete Profile(Admin only) ────//
-export const deleteProfile = async (userId) => {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+const deleteProfile = async (userId) => {
+    const user = await prisma_js_1.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-        throw new AppError("User not found", 404);
+        throw new AppError_js_1.AppError("User not found", 404);
     }
-    await prisma.user.delete({ where: { id: userId } });
+    await prisma_js_1.prisma.user.delete({ where: { id: userId } });
     return { message: "User deleted successfully" };
 };
+exports.deleteProfile = deleteProfile;
 //# sourceMappingURL=auth.service.js.map
