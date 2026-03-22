@@ -1,58 +1,40 @@
-// {
-//   // Visit https://aka.ms/tsconfig to read more about this file
-//   "compilerOptions": {
-//     // File Layout
-//     "rootDir": "./src",
-//     "outDir": "./dist",
 
-//     // Environment Settings
-//     // See also https://aka.ms/tsconfig/module
-//     "module": "nodenext",
+// {
+//   "compilerOptions": {
+//     "rootDir": "./",
+//     "outDir": "./dist",
+//     "module": "commonjs",
 //     "target": "esnext",
-//     // "types": [],
-//     // For nodejs:
 //     "lib": ["esnext"],
 //     "types": ["node"],
-//     // and npm install -D @types/node
-
-//     // Other Outputs
+    
 //     "sourceMap": true,
 //     "declaration": true,
 //     "declarationMap": true,
 
-//     // Stricter Typechecking Options
-//     "noUncheckedIndexedAccess": true,
-//     "exactOptionalPropertyTypes": false,
-
-//     // Style Options
-//     // "noImplicitReturns": true,
-//     // "noImplicitOverride": true,
-//     // "noUnusedLocals": true,
-//     // "noUnusedParameters": true,
-//     // "noFallthroughCasesInSwitch": true,
-//     // "noPropertyAccessFromIndexSignature": true,
-
-//     // Recommended Options
 //     "strict": true,
-//     // "jsx": "react-jsx",
-//     // "verbatimModuleSyntax": true,
+//     "noUncheckedIndexedAccess": true,
+//     "exactOptionalPropertyTypes": false, 
+
 //     "isolatedModules": true,
-//     "noUncheckedSideEffectImports": true,
 //     "moduleDetection": "force",
 //     "skipLibCheck": true,
+//     "esModuleInterop": true 
 //   },
-//   "exclude": [
-//     "node_modules",
-//     "dist"
-//   ],
-//   "include": [
-//     "src/**/*"
-//   ]
+//   "exclude": ["node_modules", "dist"],
+//   "include": ["src/**/*","api/**/*"]
 // }
 
 
 {
   "compilerOptions": {
+    /* Path Resolution */
+    "baseUrl": ".",
+    "paths": {
+      "../generated/prisma/client.js": ["./src/generated/prisma/client"]
+    },
+
+    /* Basic Options */
     "rootDir": "./",
     "outDir": "./dist",
     "module": "commonjs",
@@ -60,19 +42,22 @@
     "lib": ["esnext"],
     "types": ["node"],
     
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-
+    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": false, 
 
+    /* Emit */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Interop & Modern Tools */
     "isolatedModules": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
     "esModuleInterop": true 
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*","api/**/*"]
+  "include": ["src/**/*", "api/**/*", "src/generated/**/*"]
 }

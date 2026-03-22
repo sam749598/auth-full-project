@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
 
 enum Role {
@@ -18,14 +18,13 @@ enum Role {
 }
 
 model User {
- id  String  @id @default(uuid())
- name String?
- email String @unique
- password String
- role Role    @default(USER)    
- createdAt DateTime @default(now())
- updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  name      String?
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
- @@map("users")
+  @@map("users")
 }
-
