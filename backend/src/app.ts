@@ -11,12 +11,23 @@ const app = express()
 // ─── Global Middlewares ──────//
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://auth-full-frontend.vercel.app",
-  ],
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "https://auth-full-frontend.vercel.app",
+    ];
+    // Vercel preview URLs allow করুন
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
+
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
