@@ -20,15 +20,16 @@ const app = express()
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://auth-full-frontend.vercel.app",
-  "https://auth-full-frontend-8jcryopq6-ab-sams-projects.vercel.app" // Add this specific one
+  "https://auth-full-frontend.vercel.app"
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl)
+    // Allow requests with no origin (like mobile apps)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".vercel.app")) {
+    
+    // Check if origin is in the list OR is a vercel.app subdomain
+    if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
