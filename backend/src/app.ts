@@ -10,13 +10,40 @@ const app = express()
 
 // ─── Global Middlewares ──────//
 
+// app.use(cors({
+//   origin: [
+//     "http://localhost:3000",
+//     "https://auth-full-frontend.vercel.app",
+//   ],
+//   credentials: true,
+// }));
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://auth-full-frontend.vercel.app",
+  "https://auth-full-frontend-8jcryopq6-ab-sams-projects.vercel.app" // Add this specific one
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://auth-full-frontend.vercel.app",
-  ],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+// Explicitly handle preflight OPTIONS requests for all routes
+app.options('*', cors());
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
